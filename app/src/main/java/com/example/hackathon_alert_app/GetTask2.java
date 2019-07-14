@@ -23,9 +23,8 @@ public class GetTask2 extends AsyncTask<Void, Void, String> {
     private AppCompatActivity activity;
     private MediaPlayer mediaPlayer;
 
-    public GetTask2(AppCompatActivity activity, MediaPlayer  mediaPlayer) {
+    public GetTask2(AppCompatActivity activity) {
         this.activity = activity;
-        this.mediaPlayer = mediaPlayer;
     }
 
     @Override
@@ -79,7 +78,12 @@ public class GetTask2 extends AsyncTask<Void, Void, String> {
 //        notifHelper.showLongToast(result);
         try {
             JSONObject jsonResult = new JSONObject(result);
-            this.mediaPlayer.stop();
+            Long alert = jsonResult.getLong("time");
+            Long currentMilliTime = System.currentTimeMillis();
+            if (currentMilliTime - alert < 10000){
+                MediaPlayer  mediaPlayer = MediaPlayer.create(this.activity, R.raw.one);
+                mediaPlayer.start();
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }

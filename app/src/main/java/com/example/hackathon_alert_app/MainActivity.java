@@ -17,23 +17,39 @@ public class MainActivity extends AppCompatActivity {
 
         MediaPlayer  mediaPlayer = null;
 
-        MyTimerTask myTask = new MyTimerTask(MainActivity.this, mediaPlayer);
+        MyTimerTask myTask = new MyTimerTask(MainActivity.this);
         Timer myTimer = new Timer();
 
         myTimer.schedule(myTask, 1500, 7000);
+
+        MyTimerTask2 myTask2 = new MyTimerTask2(MainActivity.this);
+        Timer myTimer2 = new Timer();
+
+        myTimer2.schedule(myTask2, 1500, 5000);
     }
 
     class MyTimerTask extends TimerTask {
         AppCompatActivity activity;
-        MediaPlayer  mediaPlayer;
 
-        MyTimerTask(AppCompatActivity activity, MediaPlayer mediaPlayer){
+        MyTimerTask(AppCompatActivity activity){
             this.activity = activity;
-            this.mediaPlayer = mediaPlayer;
         }
 
         public void run() {
             GetTask getTask = new GetTask(MainActivity.this);
+            getTask.execute();
+        }
+    }
+
+    class MyTimerTask2 extends TimerTask {
+        AppCompatActivity activity;
+
+        MyTimerTask2(AppCompatActivity activity){
+            this.activity = activity;
+        }
+
+        public void run() {
+            GetTask2 getTask = new GetTask2(MainActivity.this);
             getTask.execute();
         }
     }
