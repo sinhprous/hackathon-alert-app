@@ -15,15 +15,17 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class GetTask extends AsyncTask<Void, Void, String> {
+public class GetTask2 extends AsyncTask<Void, Void, String> {
 
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 15000;
     private static final int CONNECTION_TIMEOUT = 15000;
     private AppCompatActivity activity;
+    private MediaPlayer mediaPlayer;
 
-    public GetTask(AppCompatActivity activity) {
+    public GetTask2(AppCompatActivity activity, MediaPlayer  mediaPlayer) {
         this.activity = activity;
+        this.mediaPlayer = mediaPlayer;
     }
 
     @Override
@@ -33,7 +35,7 @@ public class GetTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        String stringUrl = "https://delta-entry-160518.firebaseio.com/collectors.json";
+        String stringUrl = "https://delta-entry-160518.firebaseio.com/controllers.json";
         String result;
         String inputLine;
         try {
@@ -77,14 +79,7 @@ public class GetTask extends AsyncTask<Void, Void, String> {
 //        notifHelper.showLongToast(result);
         try {
             JSONObject jsonResult = new JSONObject(result);
-            Double alert = jsonResult.getDouble("alert");
-            if (alert>0.85){
-                MediaPlayer  mediaPlayer = MediaPlayer.create(this.activity, R.raw.one);
-                mediaPlayer.start();
-            }else if(alert>0.75){
-                MediaPlayer  mediaPlayer = MediaPlayer.create(this.activity, R.raw.two);
-                mediaPlayer.start();
-            }
+            this.mediaPlayer.stop();
         } catch (JSONException e) {
             e.printStackTrace();
         }
