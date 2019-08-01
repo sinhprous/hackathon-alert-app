@@ -78,7 +78,6 @@ public class GetTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected void onPostExecute(final String result) {
-//        notifHelper.showLongToast(result);
         try {
             JSONObject jsonResult = new JSONObject(result);
             Double alert = jsonResult.getDouble("alert");
@@ -93,11 +92,20 @@ public class GetTask extends AsyncTask<Void, Void, String> {
 
                 Long currentMilliTime = System.currentTimeMillis();
                 if (currentMilliTime - timestamp < 10000){
-                    if (alert>0.85){
-                        MediaPlayer  mediaPlayer = MediaPlayer.create(this.activity, R.raw.one);
+                    if (alert>0.9){
+                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.fiv);
                         mediaPlayer.start();
-                    }else if(alert>0.75){
-                        MediaPlayer  mediaPlayer = MediaPlayer.create(this.activity, R.raw.two);
+                    }else if(alert>0.8){
+                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.four);
+                        mediaPlayer.start();
+                    }else if(alert>0.7){
+                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.three);
+                        mediaPlayer.start();
+                    }else if(alert>0.6){
+                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.two);
+                        mediaPlayer.start();
+                    }else if(alert>0.5){
+                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.one);
                         mediaPlayer.start();
                     }
                 }
