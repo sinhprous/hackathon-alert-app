@@ -37,7 +37,7 @@ public class GetTask extends AsyncTask<Void, Void, String> {
 
     @Override
     protected String doInBackground(Void... params) {
-        String stringUrl = "https://delta-entry-160518.firebaseio.com/collectors.json";
+        String stringUrl = "https://delta-entry-160518.firebaseio.com/controllers.json";
         String result;
         String inputLine;
         try {
@@ -81,36 +81,25 @@ public class GetTask extends AsyncTask<Void, Void, String> {
         try {
             JSONObject jsonResult = new JSONObject(result);
             Double alert = jsonResult.getDouble("alert");
-            String dateTime = jsonResult.getString("time");
-            DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-            Date recentTime = null;
-            try {
-                recentTime = (Date)formatter.parse(dateTime);
-                long output = recentTime.getTime()/1000L;
-                String str = Long.toString(output);
-                long timestamp = Long.parseLong(str) * 1000;
-
-                Long currentMilliTime = System.currentTimeMillis();
-                if (currentMilliTime - timestamp < 10000){
-                    if (alert>0.9){
-                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.fiv);
-                        mediaPlayer.start();
-                    }else if(alert>0.8){
-                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.four);
-                        mediaPlayer.start();
-                    }else if(alert>0.7){
-                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.three);
-                        mediaPlayer.start();
-                    }else if(alert>0.6){
-                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.two);
-                        mediaPlayer.start();
-                    }else if(alert>0.5){
-                        MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.one);
-                        mediaPlayer.start();
-                    }
+            Long timestamp = jsonResult.getLong("time");
+            Long currentMilliTime = System.currentTimeMillis();
+            if (currentMilliTime - timestamp < 10000){
+                if (alert>0.9){
+                    MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.fiv);
+                    mediaPlayer.start();
+                }else if(alert>0.8){
+                    MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.four);
+                    mediaPlayer.start();
+                }else if(alert>0.7){
+                    MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.three);
+                    mediaPlayer.start();
+                }else if(alert>0.6){
+                    MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.two);
+                    mediaPlayer.start();
+                }else if(alert>0.5){
+                    MediaPlayer mediaPlayer = MediaPlayer.create(this.activity, R.raw.one);
+                    mediaPlayer.start();
                 }
-            } catch (ParseException e) {
-                e.printStackTrace();
             }
         } catch (JSONException e) {
             e.printStackTrace();
